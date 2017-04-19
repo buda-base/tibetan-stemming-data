@@ -15,4 +15,5 @@ test_vocab.txt contains the words of that sentence categorised according to thei
 
 ## The whole tagged lexicon 
 lexicon_with_markers.txt is obtained by processing vocabs/TDC.txt with affixify.py
+note: the sskrt syllables marked with /B were manually processed. Ideally, a thorough analysis of sskrt syllables would enable to automatize this process.
 
