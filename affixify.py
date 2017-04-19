@@ -36,12 +36,12 @@ for word in tsikchen:
         if components.is_thame(syls[-1]):
             if syls[-1].endswith('འ'):
                 syls[-1] += '/A'
-            else:
+            elif not syls[-1].endswith('ར') and not syls[-1].endswith('ས'):
                 syls[-1] += '/B'
-        elif components.get_parts(syls[-1]) == None and contains_sskrt(syls[-1]):
+        #elif components.get_parts(syls[-1]) == None and contains_sskrt(syls[-1]):
             #  # used to print all the syllables and manually select the ones that allow an affixed particle
             # print(syls[-1], end = ' ')
-            if syls[-1] in affixable_sskrt:
+        elif syls[-1] in affixable_sskrt:
                 syls[-1] += '/B'
 
     # reinsert the tseks
