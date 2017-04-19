@@ -36,7 +36,7 @@ for word in tsikchen:
         if components.is_thame(syls[-1]):
             if syls[-1].endswith('འ'):
                 syls[-1] += '/A'
-            elif not syls[-1].endswith('ར') and not syls[-1].endswith('ས'):
+            elif not syls[-1].endswith('ར') and not syls[-1].endswith('ས') and not syls[-1].endswith('ག'):
                 syls[-1] += '/B'
         #elif components.get_parts(syls[-1]) == None and contains_sskrt(syls[-1]):
             #  # used to print all the syllables and manually select the ones that allow an affixed particle
