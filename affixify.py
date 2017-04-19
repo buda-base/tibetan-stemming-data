@@ -54,4 +54,4 @@ for word in tsikchen:
             syls[s] = '་/'.join(syls[s].split('/'))
 
     lexicon.append(''.join(syls))
-write_file('TDC_with_markers.txt', '\n'.join(lexicon))
+write_file('lexicon_with_markers.txt', '\n'.join(lexicon))
