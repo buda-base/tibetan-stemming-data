@@ -2,7 +2,7 @@
 
 ## affixify.py
 
- - Adds a /C to every encountered syllable that is in dadrag_syllables.txt
+ - Adds a /C to every encountered syllable that is in dadrag_syllables.txt. (its content comes from [here](https://github.com/eroux/tibetan-spellchecker/blob/master/doc/second-suffix-da.md). All syllables until GT are included)
  - To the final syllable:
     - nothing added if the syllable can't host any affixed particle,
     - /A added if the particle can host an affixed particle and requires a final འ to be valid,
