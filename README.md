@@ -70,5 +70,5 @@ Affixed particles (འི, འོ, -ས and -ར) and dadrag (ད་དྲག) a
  - `output/total_lexicon.txt`
 
 ##### Issues
- - Applying the particle over the last syllable of some words might generate an ambiguous inflected form. Ex: `བར་` can be བ+ར་ (cow + ladon) or བར་ (interval).
+ - Applying the particle over the last syllable of some words might generate an ambiguous inflected form. Ex: `སྡེ་པར་` where པར་ can be both the particle and the compressed form of པར་མ་.
 
