@@ -1,6 +1,7 @@
 from PyTib import getSylComponents
-from PyTib.common import open_file, write_file
+from utils import open_file, write_file
 import re
+
 
 def contains_sskrt(syl):
     # Source for regexes : Paul Hackett Visual Basic script
@@ -17,8 +18,8 @@ def contains_sskrt(syl):
 
 
 components = getSylComponents()
-components.dadrag = open_file('dadrag_syllables.txt').strip().split('\n')
-tsikchen = open_file('./vocabs/TDC.txt').strip().split('\n')
+components.dadrag = open_file('input/dadrag_syllables.txt').strip().split('\n')
+tsikchen = open_file('input/vocabs/TDC.txt').strip().split('\n')
 
 # manually obtained by filtering the output of line 43
 affixable_sskrt = ['ཀཱ', 'ཀཱ', 'ཡཿ', 'ཀཱ', 'ཊ', 'ཊ', 'ཀལྤ', 'ཏུཿ', 'ཊ', 'ཥ', 'ཤམབྷི', 'ཀཝ', 'ཁཎཌ', 'གཱ', 'གཎཌི', 'སཧྲཱི', 'ལཱ', 'ཤིརཥ', 'ཥ', 'ཊིཀ', 'དཧྲུ', 'ཊཱིཀ', 'ཐརྐ', 'ལྡེའུ', 'རཿ', 'ཊ', 'ཊུ', 'ཎཾ', 'པདམ', 'ཥ', 'པྲེཏཱ', 'བནདེ', 'བིལྦ', 'བེརྒ', 'ཋ', 'ཎི', 'ཊི', 'གྷ', 'མཉཛུ', 'ཥཱན', 'མརྒཏ', 'མརྒད', 'མཧཱ', 'མཧཱམཱཡཿ', 'མཱལཏི', 'ཀཱ', 'མིཏྲཱི', 'དམེའ', 'བྱཱ', 'ཙཀྲ', 'ལཱི', 'ཙནདྲ', 'ཊ', 'པདམ', 'ཡནཏུ', 'ཛཱཔཱ', 'ཥཐ', 'ཎ', 'སཱི', 'ཝརྟུ', 'དཧྲུ', 'ལཱ', 'གཱི', 'ཊི', 'རཀཏ', 'རཀཤ', 'རཏན', 'རཏནབྷདྲ', 'ཀཱ', 'བྷ', 'ཥི', 'ཊ', 'ཋ', 'ལཱ', 'ལཉཚ', 'ལཉཛ', 'བཱི', 'ལིངག', 'པཎ', 'ལོཀེཤྭརཿ', 'བྷ', 'ཤཱཀྱ', 'ཎ', 'ཁཎཊ', 'ལེནདྲ', 'ཏསྐྲ', 'སེདྷ', 'དྷ', 'གྷ', 'སརྦ', 'ཊ', 'ཏཱ', 'སུརཡ', 'སུརཡ', 'དྷུ', 'བཛར', 'ཐཱ', 'ཨུཏཔལ']

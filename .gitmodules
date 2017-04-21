@@ -1,3 +1,3 @@
 [submodule "vocabs"]
-	path = vocabs
+	path = input/vocabs
 	url = https://github.com/Esukhia/Tibetan-NLP-Resources
