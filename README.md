@@ -46,8 +46,8 @@ Affixed particles (འི, འོ, -ས and -ར) and dadrag (ད་དྲག) a
 ##### Output
  - `output/parsed_verbs.txt`
 
-##### Issues
-- a few entries for which Monlam doesn't give any information about conjugation are ignored. (ex: `ལྷོགས་ | ༡བྱ་ཚིག 1. ༡བརྡ་རྙིང་། རློགས། 2. ཀློགས།` is parsed into `"ལྷོགས": []`)
+##### Issues
+ - a few entries for which Monlam doesn't give any information about conjugation are ignored. (ex: `ལྷོགས་ | ༡བྱ་ཚིག 1. ༡བརྡ་རྙིང་། རློགས། 2. ཀློགས།` is parsed into `"ལྷོགས": []`)
 
 ## `compile_total_lexicon.py`
 
