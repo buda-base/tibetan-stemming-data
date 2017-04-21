@@ -1,29 +1,74 @@
 # Data for testing the Tibetan Lucene analyzers
 
-## affixify.py
+## Generated resources
 
- - Adds a /C to every encountered syllable that is in dadrag_syllables.txt. (its content comes from [here](https://github.com/eroux/tibetan-spellchecker/blob/master/doc/second-suffix-da.md). All syllables until GT are included)
- - To the final syllable:
-    - nothing added if the syllable can't host any affixed particle,
-    - /A added if the particle can host an affixed particle and requires a final འ to be valid,
-    - /B added if the particle can host an affixed particle but doesn't require a འ. 
+##### `output/total_lexicon.txt`
+A general purpose Tibetan word-list.
+Each line is formatted as follows: `inflected<space>lemma`
+Affixed particles (འི, འོ, -ས and -ར) and dadrag (ད་དྲག) are appended to each processed word following the syllable-formation rules.  
 
-## prepare_verbs.py
+##### Minimal testing-set
+ - `test_sentence.txt`: the beginning of a sutra(བཀྲ་ཤིས་ཆེན་པོའི་མདོ།) split in words.
+ - `test_vocab.txt`: the words from the sentence and all their inflected forms.
 
-Takes as input monlam_verbs.json, produced for Esukhia's canon_notes project and produces two files:
-- parsed_verbs.txt contains all the inflected forms from Monlam. Each entry contains:
-    - either the inflected form followed by the corresponding verb form, if it corresponds to a single verb
-    - or the inflected forme followed by "0" in case the inflected form corresponds to more than one verb
-- ambiguous_verbs.txt contains all the inflected forms that correspond to more than one verb, with the same format as above.
+## `affixify.py`
 
-note: a few entries for which Monlam doesn't give any information about conjugation are ignored. (ex: ལྷོགས་ | ༡བྱ་ཚིག 1. ༡བརྡ་རྙིང་། རློགས། 2. ཀློགས།)
+##### Input:
+ - `input/dadrag_syllables.txt` (from [here](https://github.com/eroux/tibetan-spellchecker/blob/master/doc/second-suffix-da.md). All syllables until GT are included)
+ - `input/vocabs/TDC.txt` (from [here](https://github.com/Esukhia/Tibetan-NLP-Resources))
 
-## small testing-set
-test_sentence.txt contains the beginning  of a sutra split in words.
+##### Action
+ - To every entry of `TDC.txt`:
+    - Appends /C to every syllable that is in `dadrag_syllables.txt` 
+    - To the final syllable:
+        - nothing added if the syllable can't host any affixed particle,
+        - /A added if the particle can host an affixed particle and requires a final འ to be valid,
+        - /B added if the particle can host an affixed particle but doesn't require a འ. 
 
-test_vocab.txt contains the words of that sentence categorised according to their syllable type:
+##### Output
+ - `output/lexicon_with_markers.txt`
+ 
+##### Issues
+ - the sskrt syllables marked with /B were manually processed. Implementing of the sskrt syllables formation rules would enable to automatize this process.
 
-## The whole tagged lexicon 
-lexicon_with_markers.txt is obtained by processing vocabs/TDC.txt with affixify.py
-note: the sskrt syllables marked with /B were manually processed. Ideally, a thorough analysis of sskrt syllables would enable to automatize this process.
+## `prepare_verbs.py`
+
+##### Input
+ - `input/monlam_verbs.json` (from Esukhia's [canon_notes](https://github.com/Esukhia/canon_notes/tree/code/2-automatic_categorisation/resources) project)
+ - `input/dadrag_syllables.txt`
+
+##### Action
+ - for every inflected form:
+    - find all the lemmas (citation forms)
+    - create a second inflected form if the verb is in `dadrag_syllables.txt`
+    - add `(inflected, lemma)` to the output list
+
+##### Output
+ - `output/parsed_verbs.txt`
+
+##### Issues
+- a few entries for which Monlam doesn't give any information about conjugation are ignored. (ex: `ལྷོགས་ | ༡བྱ་ཚིག 1. ༡བརྡ་རྙིང་། རློགས། 2. ཀློགས།` is parsed into `"ལྷོགས": []`)
+
+## `compile_total_lexicon.py`
+
+##### Input
+
+- `output/parsed_verbs.txt`
+- `input/particles.txt` (an adaptation of [this list](https://github.com/BuddhistDigitalResourceCenter/lucene-bo/blob/master/src/main/java/io/bdrc/lucene/bo/TibetanAnalyzer.java#L43))
+- `output/lexicon_with_markers.txt`
+
+##### Action
+ - expands every entry in `lexicon_with_markers.txt`:
+    - /C : create a new entry with a dadrag on the marked syllable
+    - for the entry (or entries if there is one with dadrag):
+        - /A : remove the ending འ
+        - apply all affixes (`['འི', 'འོ', 'ས', 'ར']`)
+ - de-duplicate the generated entries and the content of `parsed_verbs.txt` and `particles.txt`
+ - write the sorted entries
+
+##### Output
+ - `output/total_lexicon.txt`
+
+##### Issues
+ - Applying the particle over the last syllable of some words might generate an ambiguous inflected form. Ex: `བར་` can be བ+ར་ (cow + ladon) or བར་ (interval).
 
