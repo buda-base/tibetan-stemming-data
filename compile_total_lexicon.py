@@ -8,8 +8,19 @@ particles = [tuple(a.split(' ')) for a in particles_raw.strip().split('\n')]
 
 lexicon_raw = open_file('output/lexicon_with_markers.txt')
 lexicon = lexicon_raw.strip().split('\n')
-A_expansion = ['འི', 'འོ', 'འའིས', 'ས', 'ར']
-B_expansion = ['འི', 'འོ', 'ས', 'ར']
+A_expansion = {'འི': '>A', 'འོ': '>B', 'ས': '>C', 'ར': '>D', 'འའིས': '>E'}
+B_expansion = {'འི': '>a', 'འོ': '>b', 'ས': '>c', 'ར': '>d'}
+# operations to reconstruct the lemma
+cmds = {'>A': ('-འི', '+འ'),
+        '>a': ('-འི',),
+        '>B': ('-འོ', '+འ'),
+        '>b': ('-འོ',),
+        '>C': ('-ས', '+འ'),
+        '>c': ('-ས',),
+        '>D': ('-ར', '+འ'),
+        '>d': ('-ར',),
+        '>E': ('-འའིས', '+འ')
+        }
 
 lexicon_expanded = []
 for word in lexicon:
@@ -30,24 +41,25 @@ for word in lexicon:
         if '/' in form:
             to_affix, kind = form.split('/')
             if kind == 'A':
-                with_affixed.append(to_affix)
+                with_affixed.append((to_affix, '='))
                 to_affix = to_affix.rstrip('འ')
-                for affix in A_expansion:
-                    with_affixed.append(to_affix + affix)
+                for affix in sorted(A_expansion):
+                    with_affixed.append((to_affix + affix, A_expansion[affix]))
             if kind == 'B':
-                with_affixed.append(to_affix)
-                for affix in B_expansion:
-                    with_affixed.append(to_affix + affix)
+                with_affixed.append((to_affix, '='))
+                for affix in sorted(B_expansion):
+                    with_affixed.append((to_affix + affix, B_expansion[affix]))
         else:
-            with_affixed.append(form)
+            with_affixed.append((form, '='))
 
     # fill lexicon_expanded with all the forms found
-    for final in with_affixed:
-        lexicon_expanded.append((final, base_form))
+    lexicon_expanded.extend(with_affixed)
+    # for final in with_affixed:
+    #     lexicon_expanded.append((final, base_form))
 
 # merge all lists de-duplicating
 total_entries = list(set(lexicon_expanded+verbs+particles))
 
 tib_sorted = sorted(total_entries, key=lambda x: collator.getSortKey(x[0]))
-lines = ['{} {}'.format(inflected, lemma) for inflected, lemma in tib_sorted]
+lines = ['{} {}'.format(inflected, cmd) for inflected, cmd in tib_sorted]
 write_file('output/total_lexicon.txt', '\n'.join(lines))

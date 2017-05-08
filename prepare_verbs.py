@@ -33,7 +33,10 @@ for inflected, context in json.items():
             entries.append((inflected+'ད', verb))
     else:
         for verb in possible_verbs:
-            entries.append((inflected, verb))
+            if inflected == verb:
+                entries.append((inflected, '='))
+            else:
+                entries.append((inflected, verb))
 
 tib_sorted = sorted(entries, key=lambda x: collator.getSortKey(x[0]))
 lines = ['{} {}'.format(inflected, lemma) for inflected, lemma in tib_sorted]
