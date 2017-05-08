@@ -8,6 +8,7 @@ Each line is formatted as follows: `inflected<space>operation`
 Affixed particles (འི, འོ, -ས and -ར) and dadrag (ད་དྲག) are appended to each processed word following the syllable-formation rules.
 
 `operation` (to reconstruct the lemma) can have the following values:
+  - `lemma`: the lemma is inserted when more than the operations below are required to find it from the inflected form 
   - `=`: the inflected form and the lemma are identical
   - `>A`: remove "འི" and add "འ" 
   - `>a`: remove "འི"
