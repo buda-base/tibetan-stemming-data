@@ -9,7 +9,7 @@ particles = [tuple(a.split(' ')) for a in particles_raw.strip().split('\n')]
 lexicon_raw = open_file('output/lexicon_with_markers.txt')
 lexicon = lexicon_raw.strip().split('\n')
 A_expansion = {'འི': '>A', 'འོ': '>B', 'ས': '>C', 'ར': '>D', 'འའིས': '>E'}
-B_expansion = {'འི': '>a', 'འོ': '>b', 'ས': '>c', 'ར': '>d'}
+B_expansion = {'འི': '>a', 'འོ': '>b', 'ས': '>c', 'ར': '>d', 'འིས': '>e'}
 # operations to reconstruct the lemma
 cmds = {'>A': ('-འི', '+འ'),
         '>a': ('-འི',),
@@ -19,7 +19,8 @@ cmds = {'>A': ('-འི', '+འ'),
         '>c': ('-ས',),
         '>D': ('-ར', '+འ'),
         '>d': ('-ར',),
-        '>E': ('-འའིས', '+འ')
+        '>E': ('-འའིས', '+འ'),
+        '>e': ('-འིས',)
         }
 
 lexicon_expanded = []
