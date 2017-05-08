@@ -4,8 +4,22 @@
 
 ##### `output/total_lexicon.txt`
 A general purpose Tibetan word-list.
-Each line is formatted as follows: `inflected<space>lemma`
-Affixed particles (འི, འོ, -ས and -ར) and dadrag (ད་དྲག) are appended to each processed word following the syllable-formation rules.  
+Each line is formatted as follows: `inflected<space>operation`
+Affixed particles (འི, འོ, -ས and -ར) and dadrag (ད་དྲག) are appended to each processed word following the syllable-formation rules.
+
+`operation` (to reconstruct the lemma) can have the following values:
+  - `=`: the inflected form and the lemma are identical
+  - `>A`: remove "འི" and add "འ" 
+  - `>a`: remove "འི"
+  - `>B`: remove "འོ" and add "འ"
+  - `>b`: remove "འོ"
+  - `>C`: remove "ས" and add "འ"
+  - `>c`: remove "ས"
+  - `>D`: remove "ར" and add "འ"
+  - `>d`: remove "ར"
+  - `>E`: remove "འའིས" and add "འ"
+  - `>e`: remove "འིས"
+
 
 ##### Minimal testing-set
  - `test_sentence.txt`: the beginning of a sutra(བཀྲ་ཤིས་ཆེན་པོའི་མདོ།) split in words.
@@ -41,7 +55,7 @@ Affixed particles (འི, འོ, -ས and -ར) and dadrag (ད་དྲག) a
  - for every inflected form:
     - find all the lemmas (citation forms)
     - create a second inflected form if the verb is in `dadrag_syllables.txt`
-    - add `(inflected, lemma)` to the output list
+    - add `(inflected, lemma)` to the output list (`=` instead of `lemma` if the inflected form and the lemma are identical)
 
 ##### Output
  - `output/parsed_verbs.txt`
@@ -64,11 +78,10 @@ Affixed particles (འི, འོ, -ས and -ར) and dadrag (ད་དྲག) a
         - /A : remove the ending འ
         - apply all affixes (`['འི', 'འོ', 'ས', 'ར']`)
  - de-duplicate the generated entries and the content of `parsed_verbs.txt` and `particles.txt`
- - write the sorted entries
+ - write the sorted entries.
 
 ##### Output
  - `output/total_lexicon.txt`
 
 ##### Issues
  - Applying the particle over the last syllable of some words might generate an ambiguous inflected form. Ex: `སྡེ་པར་` where པར་ can be both the particle and the compressed form of པར་མ་.
-
