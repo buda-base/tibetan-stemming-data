@@ -1,4 +1,6 @@
 from utils import open_file, write_file, collator
+import re
+from itertools import product
 
 verbs_raw = open_file('output/parsed_verbs.txt')
 verbs = [tuple(a.split(' ')) for a in verbs_raw.strip().split('\n')]
@@ -11,15 +13,15 @@ lexicon = lexicon_raw.strip().split('\n')
 A_expansion = {'འི': '>A', 'འོ': '>B', 'ས': '>C', 'ར': '>D', 'འའིས': '>E'}
 B_expansion = {'འི': '>a', 'འོ': '>b', 'ས': '>c', 'ར': '>d', 'འིས': '>e'}
 # operations to reconstruct the lemma
-cmds = {'>A': ('-2', '+འ'),
+cmds = {'>A': ('-1',),
         '>a': ('-2',),
-        '>B': ('-2', '+འ'),
+        '>B': ('-1',),
         '>b': ('-2',),
         '>C': ('-1', '+འ'),
         '>c': ('-1',),
         '>D': ('-1', '+འ'),
         '>d': ('-1',),
-        '>E': ('-4', '+འ'),
+        '>E': ('-3',),
         '>e': ('-3',)
         }
 
@@ -33,6 +35,34 @@ def apply_cmds(form, cmd, cmds):
             form = form+mod[1:]
     return form
 
+
+def generate_combinations(word):
+    parts = [a for a in re.split('(་?/C)', word) if a != '']
+    amount = word.count('/C')
+    if amount == 2:
+        permutations = list(product([0, 1], [0, 1]))
+    if amount == 3:
+        permutations = list(product([0, 1], [0, 1], [0, 1]))
+    if amount == 4:
+        permutations = list(product([0, 1], [0, 1], [0, 1], [0, 1]))
+    total = []
+    for per in permutations:
+        temp = [a for a in parts]
+        el_count = 1
+        for choice in per:
+            if choice == 1:
+                if temp[el_count].startswith('་'):
+                    temp[el_count] = 'ད་'
+                else:
+                    temp[el_count] = 'ད'
+                el_count += 2
+            elif choice == 0:
+                temp[el_count] = temp[el_count].replace('/C', '')
+                el_count += 2
+        total.append(''.join(temp))
+    return total
+
+multiple = []
 lexicon_expanded = []
 for word in lexicon:
     base_form = word.replace('/A', '').replace('/B', '').replace('/C', '')
@@ -41,8 +71,11 @@ for word in lexicon:
     # expand all forms with dadrag
     with_dadrag = []
     if '/C' in word:
-        with_dadrag.append(word.replace('/C', ''))
-        with_dadrag.append(word.replace('་/C', 'ད་'))
+        if word.count('/C') > 1:
+            with_dadrag.extend(generate_combinations(word))
+        else:
+            with_dadrag.append(word.replace('/C', ''))
+            with_dadrag.append(re.sub(r'(་)?/C', r'ད\1', word))
     else:
         with_dadrag.append(word)
 
@@ -80,3 +113,5 @@ total_entries = list(set(lexicon_expanded+verbs+particles))
 tib_sorted = sorted(total_entries, key=lambda x: collator.getSortKey(x[0]))
 lines = ['{} {}'.format(inflected, cmd) for inflected, cmd in tib_sorted]
 write_file('output/total_lexicon.txt', '\n'.join(lines))
+print(len(total_entries))
+print(multiple)

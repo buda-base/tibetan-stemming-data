@@ -10,15 +10,15 @@ Affixed particles (འི, འོ, -ས and -ར) and dadrag (ད་དྲག) a
 `operation` (to reconstruct the lemma) can have the following values:
   - `lemma`: the lemma is inserted when more than the operations below are required to find it from the inflected form 
   - `=`: the inflected form and the lemma are identical
-  - `>A`: remove "འི" and add "འ" 
+  - `>A`: remove the gigu 
   - `>a`: remove "འི"
-  - `>B`: remove "འོ" and add "འ"
+  - `>B`: remove the naro
   - `>b`: remove "འོ"
   - `>C`: remove "ས" and add "འ"
   - `>c`: remove "ས"
   - `>D`: remove "ར" and add "འ"
   - `>d`: remove "ར"
-  - `>E`: remove "འའིས" and add "འ"
+  - `>E`: remove "འིས"
   - `>e`: remove "འིས"
 
 
