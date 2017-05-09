@@ -8,19 +8,12 @@ Each line is formatted as follows: `inflected<space>operation`
 Affixed particles (འི, འོ, -ས and -ར) and dadrag (ད་དྲག) are appended to each processed word following the syllable-formation rules.
 
 `operation` (to reconstruct the lemma) can have the following values:
-  - `lemma`: the lemma is inserted when more than the operations below are required to find it from the inflected form 
+  - `/lemma`: the lemma is inserted when more than the operations below are required to find it from the inflected form 
   - `=`: the inflected form and the lemma are identical
-  - `>A`: remove the gigu 
-  - `>a`: remove "འི"
-  - `>B`: remove the naro
-  - `>b`: remove "འོ"
-  - `>C`: remove "ས" and add "འ"
-  - `>c`: remove "ས"
-  - `>D`: remove "ར" and add "འ"
-  - `>d`: remove "ར"
-  - `>E`: remove "འིས"
-  - `>e`: remove "འིས"
-
+  - `>A`: remove one character 
+  - `>B`: remove two characters
+  - `>C`: remove three characters
+  - `>D`: remove one character and add "འ"
 
 ##### Minimal testing-set
  - `test_sentence.txt`: the beginning of a sutra(བཀྲ་ཤིས་ཆེན་པོའི་མདོ།) split in words.
@@ -56,7 +49,7 @@ Affixed particles (འི, འོ, -ས and -ར) and dadrag (ད་དྲག) a
  - for every inflected form:
     - find all the lemmas (citation forms)
     - create a second inflected form if the verb is in `dadrag_syllables.txt`
-    - add `(inflected, lemma)` to the output list (`=` instead of `lemma` if the inflected form and the lemma are identical)
+    - add `(inflected, /lemma)` to the output list (`=` instead of `/lemma` if the inflected form and the lemma are identical)
 
 ##### Output
  - `output/parsed_verbs.txt`

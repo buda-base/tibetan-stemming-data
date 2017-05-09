@@ -30,13 +30,13 @@ for inflected, context in json.items():
     # add an entry for every possible verb
     if inflected in dadrag:
         for verb in possible_verbs:
-            entries.append((inflected+'ད', verb))
+            entries.append((inflected+'ད', '/'+verb))
     else:
         for verb in possible_verbs:
             if inflected == verb:
                 entries.append((inflected, '='))
             else:
-                entries.append((inflected, verb))
+                entries.append((inflected, '/'+verb))
 
 tib_sorted = sorted(entries, key=lambda x: collator.getSortKey(x[0]))
 lines = ['{} {}'.format(inflected, lemma) for inflected, lemma in tib_sorted]

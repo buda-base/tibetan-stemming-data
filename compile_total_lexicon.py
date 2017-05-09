@@ -10,19 +10,13 @@ particles = [tuple(a.split(' ')) for a in particles_raw.strip().split('\n')]
 
 lexicon_raw = open_file('output/lexicon_with_markers.txt')
 lexicon = lexicon_raw.strip().split('\n')
-A_expansion = {'འི': '>A', 'འོ': '>B', 'ས': '>C', 'ར': '>D', 'འའིས': '>E'}
-B_expansion = {'འི': '>a', 'འོ': '>b', 'ས': '>c', 'ར': '>d', 'འིས': '>e'}
+A_expansion = {'འི': '>A', 'འོ': '>A', 'ས': '>D', 'ར': '>D', 'འའིས': '>C'}
+B_expansion = {'འི': '>B', 'འོ': '>B', 'ས': '>A', 'ར': '>A', 'འིས': '>C'}
 # operations to reconstruct the lemma
 cmds = {'>A': ('-1',),
-        '>a': ('-2',),
-        '>B': ('-1',),
-        '>b': ('-2',),
-        '>C': ('-1', '+འ'),
-        '>c': ('-1',),
-        '>D': ('-1', '+འ'),
-        '>d': ('-1',),
-        '>E': ('-3',),
-        '>e': ('-3',)
+        '>B': ('-2',),
+        '>C': ('-3',),
+        '>D': ('-1', '+འ')
         }
 
 
@@ -90,14 +84,14 @@ for word in lexicon:
                     if apply_cmds(to_affix+affix, A_expansion[affix], cmds) == base_form:
                         with_affixed.append((to_affix + affix, A_expansion[affix]))
                     else:
-                        with_affixed.append((to_affix + affix, base_form))
+                        with_affixed.append((to_affix + affix, '/'+base_form))
             if kind == 'B':
                 with_affixed.append((to_affix, '='))
                 for affix in sorted(B_expansion):
                     if apply_cmds(to_affix+affix, B_expansion[affix], cmds) == base_form:
                         with_affixed.append((to_affix + affix, B_expansion[affix]))
                     else:
-                        with_affixed.append((to_affix + affix, base_form))
+                        with_affixed.append((to_affix + affix, '/'+base_form))
         else:
             with_affixed.append((form, '='))
 
