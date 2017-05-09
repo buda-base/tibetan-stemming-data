@@ -62,7 +62,6 @@ def generate_combinations(word):
         total.append(''.join(temp))
     return total
 
-multiple = []
 lexicon_expanded = []
 for word in lexicon:
     base_form = word.replace('/A', '').replace('/B', '').replace('/C', '')
