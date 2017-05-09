@@ -113,4 +113,3 @@ tib_sorted = sorted(total_entries, key=lambda x: collator.getSortKey(x[0]))
 lines = ['{} {}'.format(inflected, cmd) for inflected, cmd in tib_sorted]
 write_file('output/total_lexicon.txt', '\n'.join(lines))
 print(len(total_entries))
-print(multiple)
