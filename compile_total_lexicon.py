@@ -1,3 +1,5 @@
+#!/usr/bin/env python
+# -*- coding: utf-8 -*-
 from utils import open_file, write_file, collator
 import re
 from itertools import product
