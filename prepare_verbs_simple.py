@@ -17,7 +17,7 @@ with open('input/monlam_verbs.json') as json_file:
                 possible.add(context['བྱ་ཚིག'])
 
         possible = list(possible)
-        if len(possible) == 1 and possible[0] != inflected:
-            print(inflected+","+possible[0])
-            if inflected in dadragsyls:
-                print(inflected+"ད,"+possible[0])
+        #if len(possible) == 1 and possible[0] != inflected:
+        for p in possible:
+            if p != inflected:
+                print(p+","+inflected)

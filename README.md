@@ -7,6 +7,9 @@ A general purpose Tibetan word-list.
 Each line is formatted as follows: `inflected<space>lemma`
 Affixed particles (འི, འོ, -ས and -ར) and dadrag (ད་དྲག) are appended to each processed word following the syllable-formation rules.  
 
+##### `output/verbs_lemmas.csv`
+A list of inflected verbs with their corresponding present form, from Hill, Nathan (2010) "A Lexicon of Tibetan Verb Stems as Reported by the Grammatical Tradition" (Munich: Bayerische Akademie der Wissenschaften, ISBN 978-3-7696-1004-8. The list is derived from the version on https://github.com/tibetan-nlp/lexicon-of-tibetan-verb-stems/, with very minor adjustments and reformatting.
+
 ##### Minimal testing-set
  - `test_sentence.txt`: the beginning of a sutra(བཀྲ་ཤིས་ཆེན་པོའི་མདོ།) split in words.
  - `test_vocab.txt`: the words from the sentence and all their inflected forms.
